@@ -21,6 +21,7 @@ public interface FotoProfiloUtentiDAO {
     @Insert
     void insertFotoProfiloUtente(FotoProfiloUtente... fotoProfiloUtente);
 
+
     @Delete
     void delete(FotoProfiloUtente fotoProfiloUtente);
 

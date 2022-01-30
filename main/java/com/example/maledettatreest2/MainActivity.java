@@ -1,55 +1,60 @@
 package com.example.maledettatreest2;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.maledettatreest2.db_foto.AppDatabase;
 import com.example.maledettatreest2.db_foto.FotoProfiloUtente;
+import com.example.maledettatreest2.fragment.HomeFragment;
+import com.example.maledettatreest2.fragment.ProfiloFragment;
+import com.example.maledettatreest2.fragment.TratteFragment;
 import com.example.maledettatreest2.linee.Linea;
 import com.example.maledettatreest2.linee.Tratta;
-import com.example.maledettatreest2.posts.AdapterPost;
-import com.example.maledettatreest2.posts.Post;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.example.maledettatreest2.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
 
-    public static final String MTE_LOG = "MTE_LOG";
+    public static final String MAINACTIVITY_LOG = "MAINACTIVITY_LOG";
     private ActivityMainBinding binding;
+
+    private boolean avvioSuSchermataTratte = true;
 
     /**
      * istanza MainActivity
      */
-    private static MainActivity istanzaActivity;
+    private static MainActivity istanzaMainActivity;
 
     /**
      * istanza Model
      */
-    MyModel istanza = MyModel.getInstance();
+    MyModel istanzaModel = MyModel.getInstance();
 
     /**
      * dichiarazione SharedPreferences
@@ -63,10 +68,41 @@ public class MainActivity extends AppCompatActivity {
     CommunicationController cc;
 
     /**
-     * RecyclerView
+     * inizializzazione DB
      */
-    RecyclerView recyclerView;
-    AdapterPost adapterPost;
+    private AppDatabase db;
+
+    /**
+     * durata di un toast
+     */
+    int duration = Toast.LENGTH_SHORT;
+
+    /**
+     * riferimento a bottom navigation
+     */
+    BottomNavigationView navView;
+
+    /**
+     * riferimento a fragment
+     */
+    HomeFragment homeFragment = null;
+    TratteFragment tratteFragment = null;
+    ProfiloFragment profiloFragment = null;
+
+    /**
+     * funzione per fare il replace dei fragment
+     */
+    public void replaceFragment(Fragment fragment, int navName) {
+        Log.d(MAINACTIVITY_LOG, "replace " + fragment.toString());
+        //Scommentare se da problemi di trasparenza tra fragment
+        //FrameLayout fl = (FrameLayout) findViewById(R.id.fragmentContainerView);
+        //fl.removeAllViews();
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragmentContainerView, fragment, null)
+                .commit();
+        navView.getMenu().findItem(navName).setChecked(true);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -75,34 +111,40 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        navView = findViewById(R.id.nav_view);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        /** controllo internet */
+        if (!isNetworkConnected()) {
+            showDialog("Errore", "Non disponi di una connessione ad internet");
+        }
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_tratte, R.id.navigation_profilo)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.fragmentContainerView);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        /** riferimenti ai vari fragment*/
+        homeFragment = new HomeFragment();
+        tratteFragment = new TratteFragment();
+        profiloFragment = new ProfiloFragment();
 
-        //per prevenire il doppio click
-        binding.navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if (item.getItemId() != binding.navView.getSelectedItemId())
-                    NavigationUI.onNavDestinationSelected(item, navController);
-                return true;
+        /** istanza main activity */
+        istanzaMainActivity = this;
+
+        /** switch sui vai fragment*/
+        binding.navView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    replaceFragment(homeFragment, R.id.navigation_home);
+                    break;
+                case R.id.navigation_tratte:
+                    replaceFragment(tratteFragment, R.id.navigation_tratte);
+                    break;
+                case R.id.navigation_profilo:
+                    replaceFragment(profiloFragment, R.id.navigation_profilo);
+                    break;
             }
+            return true;
         });
 
-        /**istanza MainActivity*/
-        istanzaActivity = this;
-
-        /**recycleView*/
-        recyclerView = this.findViewById(R.id.recycleViewPost);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapterPost = new AdapterPost(this);
-        recyclerView.setAdapter(adapterPost);
+        /** Istanza DB */
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "db_fotoProfiloUtente").build();
+        //allowMainThreadQueries()
 
         /** inizializzazione SharedPreferences */
         settings = getSharedPreferences("settings", 0);
@@ -111,71 +153,48 @@ public class MainActivity extends AppCompatActivity {
         /** inizializzazione CommunicationController */
         cc = new CommunicationController(this);
 
+        clearModel();
+
         /** controllo primo avvio */
-        if (primoAvvio()) {
-            Log.d(MTE_LOG, "*****PRIMO AVVIO*****");
-            // Chiamata register
-            cc.register(
-                    response -> {
-                        //salvataggio sid
-                        try {
-                            editor.putString("sid", response.getString("sid"));
-                            editor.commit();
-                            istanza.setSid(response.getString("sid"));
-                            Log.d(MTE_LOG, "sid salvato (model e shared) ->  " + istanza.getSid());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        downloadLinee();
-                    },
-                    error -> {
-                        Log.e(MTE_LOG, "errore register  " + error.getLocalizedMessage());
-                    }
-            );
-            //modifica prima schermata
-            BottomNavigationView bottomNavigationView;
-            bottomNavigationView = findViewById(R.id.nav_view);
-            bottomNavigationView.setSelectedItemId(R.id.navigation_tratte);
-        } else {
-            Log.d(MTE_LOG, "*******SECONDO + AVVIO*****  ");
-            /**popolamento model */
-            ripristinaModel();
+        if (checkFirstStart()) {  //PRIMO AVVIO
+            isFirstStart();
+        } else if (istanzaModel.getDid() == "") {// dal SECONDO AVVIO senza did
+            isSecondStartWithoutDid();
+        } else if (istanzaModel.getDid() != "") { //dal SECONDO AVVIO con did
+            avvioSuSchermataTratte = false;
+            Log.d(MAINACTIVITY_LOG, "SECONDO AVVIO con did");
             downloadLinee();
+            replaceFragment(homeFragment, R.id.navigation_home);
+        } else {//errore generico
+            showDialog("Errore", "Errore generico");
         }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        editor.putString("sid", istanza.getSid());
-        editor.putString("nome", istanza.getNome());
-        editor.putString("foto", istanza.getFoto());
-        editor.putString("did", istanza.getDid());
-        editor.commit();
-
+        saveAllInShared();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveAllInShared();
+    }
+
+    /**
+     * ritorna il riferimento alla main activity
+     */
     public static MainActivity getActivity() {
-        return istanzaActivity;
+        return istanzaMainActivity;
     }
 
-    public void passaAHome() {
-        BottomNavigationView bottomNavigationView;
-        bottomNavigationView = findViewById(R.id.nav_view);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-    }
+    /**
+     * funzioni per il primo avvio
+     */
 
-
-    public void ripristinaModel() {
-        istanza.setSid(settings.getString("sid", "sid error"));
-        istanza.setDid(settings.getString("did", "did error"));
-        //istanza.setNome(settings.getString("nome", "nome error"));
-        //istanza.setFoto(settings.getString("foto", "foto error"));
-
-    }
-
-    public boolean primoAvvio() {
-        if (settings.getBoolean("primoAvvio", true)) {
+    public boolean checkFirstStart() {
+        if (settings.getBoolean("primoAvvio", true) && istanzaModel.getSid() == "") {
             editor.putBoolean("primoAvvio", false);
             editor.commit();
             return true;
@@ -184,132 +203,215 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void popolaBacheca() {
-        TextView ultimaDirezione;
-        TextView ultimaLinea;
-        ultimaDirezione = this.findViewById(R.id.textUltimaDirezione);
-        ultimaLinea = this.findViewById(R.id.textUltimaLinea);
-        ultimaDirezione.setText(istanza.getUltimaDirezione());
-        ultimaLinea.setText(istanza.getUltimaLinea());
+    private void isFirstStart() {
+        avvioSuSchermataTratte = true;
+        Log.d(MAINACTIVITY_LOG, "PRIMO AVVIO");
+        replaceFragment(tratteFragment, R.id.navigation_tratte);
+        navView.getMenu().getItem(0).setEnabled(false);  // disabilita bottone Home
 
-        //todo --> provare a richiamare il fragment
+        register();
     }
 
-    public void downloadLinee() {
-        Log.d(MTE_LOG, "download linee");
-        cc.getLines(
-                istanza.getSid(),
-                response -> {
-                    Log.d(MTE_LOG, "linee da risposta " + response.toString());
-                    initLineeFromJson(response);
-                    downloadPosts();
-                    //todo --> notify schermata tratte
 
+    /**
+     * funzioni per il secondo avvio
+     */
+
+    private void isSecondStartWithoutDid() {
+        Log.d(MAINACTIVITY_LOG, "SECONDO AVVIO senza did");
+        clearModel();
+        avvioSuSchermataTratte = true;
+        replaceFragment(tratteFragment, R.id.navigation_tratte);
+        navView.getMenu().getItem(0).setEnabled(false);  // disabilita bottone Home
+        downloadLinee();
+    }
+
+    /**
+     * funzione per ritornare alla schermata home
+     */
+    public void goToHomePage() {
+        replaceFragment(homeFragment, R.id.navigation_home);
+    }
+
+    /**
+     * metodi sul model
+     */
+    public void clearModel() {
+        istanzaModel.setSid(settings.getString("sid", ""));
+        istanzaModel.setDid(settings.getString("did", ""));
+        istanzaModel.setNome(settings.getString("nome", ""));
+        istanzaModel.setFoto(settings.getString("foto", ""));
+        Log.d("test12", "ripristinaMOdel -> " + istanzaModel.getFoto());
+
+        Thread thread = new Thread() {
+            public void run() {
+                List<FotoProfiloUtente> arrayfpu = db.fotoProfiloUtentiDAO().getAll();
+                istanzaModel.setFotoProfiloUtenti((ArrayList<FotoProfiloUtente>) arrayfpu);
+            }
+        };
+        thread.start();
+    }
+
+    /**
+     * salvataggio persistente
+     */
+    public void saveAllInShared() {
+        Log.d("MTE", "salva ttutto");
+        editor.putString("sid", istanzaModel.getSid());
+        editor.putString("nome", istanzaModel.getNome());
+        editor.putString("foto", istanzaModel.getFoto());
+        editor.putString("did", istanzaModel.getDid());
+        editor.commit();
+    }
+
+    /**
+     * chiamate di rete
+     */
+    public void downloadLinee() {
+        Log.d(MAINACTIVITY_LOG, "download linee   SID-> " + istanzaModel.getSid());
+        cc.getLines(
+                istanzaModel.getSid(),
+                response -> {
+                    Log.d(MAINACTIVITY_LOG, "linee da risposta " + response.toString());
+                    createLineFromJSON(response);
+                    if (avvioSuSchermataTratte) {
+                        tratteFragment.notifyAdapterLinee();
+                        saveAllInShared();
+                    } else {
+                        homeFragment.refreshHomeScreen();
+                        saveAllInShared();
+                    }
                 },
-                error -> Log.e(MTE_LOG, "errore download linee  " + error.getLocalizedMessage())
+                error -> Log.e(MAINACTIVITY_LOG, "errore download linee  " + error.getLocalizedMessage())
         );
     }
 
+    private void register() {
+        Log.d(MAINACTIVITY_LOG, "register");
+        cc.register(
+                response -> {
+                    try {
+                        istanzaModel.setSid(response.getString("sid"));
+                        Log.d(MAINACTIVITY_LOG, "sid salvato (model e shared) ->  " + istanzaModel.getSid());
+                        saveAllInShared();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    downloadLinee();
+                },
+                error -> {
+                    Log.e(MAINACTIVITY_LOG, "errore register  " + error.getLocalizedMessage());
+                }
+        );
+    }
 
-
-    public void initLineeFromJson(JSONObject netRisposta) {
+    /**
+     * crea oggetto linea da JSON
+     */
+    public void createLineFromJSON(JSONObject netRisposta) {
         try {
             JSONArray arrayLineeJson = netRisposta.getJSONArray("lines");
-            istanza.azzeraLinee();
+            istanzaModel.clearLines();
             for (int i = 0; i < arrayLineeJson.length(); i++) {
-                JSONObject linea = arrayLineeJson.getJSONObject(i);
+                JSONObject lines = arrayLineeJson.getJSONObject(i);
 
-                JSONObject terminus1 = linea.getJSONObject("terminus1");
+                JSONObject terminus1 = lines.getJSONObject("terminus1");
                 String nomeTratta1 = terminus1.getString("sname");
                 String didTratta1 = terminus1.getString("did");
 
-                JSONObject terminus2 = linea.getJSONObject("terminus2");
+                JSONObject terminus2 = lines.getJSONObject("terminus2");
                 String nomeTratta2 = terminus2.getString("sname");
                 String didTratta2 = terminus2.getString("did");
 
                 Tratta t1 = new Tratta(nomeTratta1, didTratta1);
                 Tratta t2 = new Tratta(nomeTratta2, didTratta2);
                 Linea l = new Linea(t1, t2);
-                istanza.addLinea(l);
+                istanzaModel.addLine(l);
             }
-
-            Log.d(MTE_LOG, "linee model  ->  " + istanza.getLinee().toString());
+            Log.d(MAINACTIVITY_LOG, "linee model  ->  " + istanzaModel.getLinee().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    /**
+     * notifiche ai vari adapter
+     */
+    public void notifyAdapterPostFromMainActivity() {
+        homeFragment.notifyAdapterPost();
+        homeFragment.notifyAdapterOfficialPost();
+    }
+
+    public void notifyAdapterLineFromMainActivity() {
+        tratteFragment.notifyAdapterLinee();
+    }
+
+    /**
+     * getter fragment
+     */
+    public Fragment getHomeFragment() {
+        return homeFragment;
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void downloadPosts() {
-        Log.d(MTE_LOG, "download post");
-        cc.getPosts(
-                istanza.getSid(),
-                istanza.getDid(),
-                response -> {
-                    Log.d(MTE_LOG, "post da risposta " + response.toString());
-                    initPostsFromJson(response);
-                    //TODO
-                    popolaBacheca();
-
-                },
-                error -> Log.e(MTE_LOG, "errore download posts  " + error.getLocalizedMessage())
-        );
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void initPostsFromJson(JSONObject netRisposta) {
-        try {
-            Log.d(MTE_LOG, "INIT POST FROM JSON -------------");
-            JSONArray arrayPostsJson = netRisposta.getJSONArray("posts");
-            istanza.azzeraPosts();
-
-            for (int i = 0; i < arrayPostsJson.length(); i++) {
-
-                JSONObject postObj = arrayPostsJson.getJSONObject(i);
-
-                String nomeAutore = postObj.getString("authorName");
-                String uidAutore = postObj.getString("author");
-                String dataOra = postObj.getString("datetime");
-                String versioneFoto = postObj.getString("pversion");
-
-                Boolean followAutore = postObj.getBoolean("followingAuthor");
-
-                //opzionali
-                String ritardo;
-                String stato;
-                String commento;
-                try {
-                    ritardo = postObj.getString("delay");
-                } catch (Exception e) {
-                    ritardo = "";
-                }
-
-                try {
-                    stato = postObj.getString("status");
-                } catch (Exception e) {
-                    stato = "";
-                }
-
-                try {
-                    commento = postObj.getString("comment");
-                } catch (Exception e) {
-                    commento = "";
-                }
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.n");
-                LocalDateTime dt = LocalDateTime.parse(dataOra, formatter);
-
-                //LocalDateTime dt = LocalDateTime.now();
-                Post post = new Post(nomeAutore, uidAutore, dt, versioneFoto, followAutore, ritardo, stato, commento);
-                istanza.addPost(post);
+    /**
+     * inserimento dati nel DB
+     */
+    public void insertPictureInDB(FotoProfiloUtente fpu) {
+        Log.d(MAINACTIVITY_LOG, "insertFotoProfiloDB");
+        Thread thread = new Thread() {
+            public void run() {
+                db.fotoProfiloUtentiDAO().delete(fpu);
+                db.fotoProfiloUtentiDAO().insertFotoProfiloUtente(fpu);
             }
+        };
+        thread.start();
+    }
 
-            Log.d(MTE_LOG, "posts model  ->  " + istanza.getPosts().toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
+    /**
+     * metodi per mostrare/nascondere in automatico la tastiera
+     */
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void showKeyboard(View view, EditText mEtSearch) {
+        mEtSearch.requestFocus();
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
+    /**
+     * controllo per vedere se c'è internet
+     */
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
         }
+        return false;
 
+    }
+
+    /**
+     * metodo per settare pop-up
+     */
+    public void showDialog(String titolo, String messaggio) {
+        new AlertDialog.Builder(this)
+                .setTitle(titolo)
+                .setMessage(messaggio)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".posts.InfoOfficialPost">
+
+    <TextView
+        android:id="@+id/titlePostSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/primary_green"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.123" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/foto_official_post_selected"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:cropToPadding="true"
+        android:padding="1dp"
+        android:scaleType="centerCrop"
+        app:civ_border_color="#000000"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionPostSelected"
+        app:layout_constraintEnd_toEndOf="@+id/titlePostSelected"
+        app:layout_constraintStart_toStartOf="@+id/titlePostSelected"
+        app:layout_constraintTop_toBottomOf="@+id/dataPostSelected"
+        app:layout_constraintVertical_bias="0.602" />
+
+    <TextView
+        android:id="@+id/descriptionPostSelected"
+        android:layout_width="196dp"
+        android:layout_height="184dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/titlePostSelected"
+        app:layout_constraintStart_toStartOf="@+id/titlePostSelected"
+        app:layout_constraintTop_toBottomOf="@+id/titlePostSelected"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/dataPostSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22/12/2022"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionPostSelected"
+        app:layout_constraintEnd_toEndOf="@+id/titlePostSelected"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="@+id/titlePostSelected"
+        app:layout_constraintTop_toBottomOf="@+id/titlePostSelected"
+        app:layout_constraintVertical_bias="0.123" />
+
+    <TextView
+        android:id="@+id/oraPostSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ora"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionPostSelected"
+        app:layout_constraintEnd_toEndOf="@+id/titlePostSelected"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="@+id/titlePostSelected"
+        app:layout_constraintTop_toBottomOf="@+id/titlePostSelected"
+        app:layout_constraintVertical_bias="0.293" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionPostSelected"
+        app:layout_constraintEnd_toEndOf="@+id/descriptionPostSelected"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descriptionPostSelected"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977" />
+</androidx.constraintlayout.widget.ConstraintLayout>

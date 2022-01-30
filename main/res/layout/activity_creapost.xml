@@ -6,11 +6,56 @@
     android:layout_height="match_parent"
     tools:context=".posts.CreaPostActivity">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="CREA POST"
+        android:textSize="25dp"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.047"></com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="Situazione"
+        android:textSize="17dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.207"></com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text4"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="Ritardo"
+        android:textSize="17dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.401"></com.google.android.material.textview.MaterialTextView>
+
     <Button
         android:id="@+id/btnPubblicaPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OKAY LET'S GO"
+        android:text="Pubblica"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -18,83 +63,99 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.942" />
 
-    <EditText
-        android:id="@+id/textCommento"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/modificaNomeProfiloLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
+        android:hint="Commento"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        app:endIconMode="clear_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.674" />
+        app:layout_constraintVertical_bias="0.742"
+        app:startIconDrawable="@drawable/ic_baseline_edit_24">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Commento"
-        app:layout_constraintBottom_toBottomOf="@+id/textCommento"
-        app:layout_constraintEnd_toEndOf="@+id/textCommento"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textCommento"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.905" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ritardo"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerRitardo"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerRitardo"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/spinnerRitardo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.854" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textCommento"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:inputType="textMultiLine"
+            android:maxLength="100"
+            android:scrollbarStyle="insideInset"
+            android:singleLine="true"
+            tools:layout_editor_absoluteX="134dp"></com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
         android:id="@+id/spinnerRitardo"
         android:layout_width="258dp"
-        android:layout_height="39dp"
+        android:layout_height="48dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintVertical_bias="0.458"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <RadioGroup
-        android:layout_width="205dp"
-        android:layout_height="149dp"
-        tools:layout_editor_absoluteX="110dp"
-        tools:layout_editor_absoluteY="125dp"
-        android:orientation="vertical">
+        android:layout_width="wrap_content"
+        android:layout_height="83dp"
+        android:orientation="horizontal"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.262">
 
         <RadioButton
             android:id="@+id/radioProblemi"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MALE"
-            android:onClick="onRadioButtonClicked" />
+            android:layout_margin="16dp"
+            android:background="@drawable/radio_selector"
+            android:button="@android:color/transparent"
+            android:elevation="4dp"
+            android:onClick="onRadioButtonClicked"
+            android:padding="16dp"
+            android:text="Gravi problemi"
+            android:textColor="@drawable/text_color" />
 
         <RadioButton
             android:id="@+id/radioAccettabile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MMM"
-            android:onClick="onRadioButtonClicked" />
+            android:layout_margin="16dp"
+
+            android:background="@drawable/radio_selector"
+            android:button="@android:color/transparent"
+            android:elevation="4dp"
+            android:onClick="onRadioButtonClicked"
+            android:padding="16dp"
+            android:text="Accettabile"
+            android:textColor="@drawable/text_color" />
 
         <RadioButton
             android:id="@+id/radioIdeale"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BENE"
-            android:onClick="onRadioButtonClicked" />
+            android:layout_margin="16dp"
+            android:background="@drawable/radio_selector"
+            android:button="@android:color/transparent"
+            android:elevation="4dp"
+            android:onClick="onRadioButtonClicked"
+            android:padding="16dp"
+            android:text="Ideale"
+            android:textColor="@drawable/text_color" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+/** classe astratta che parte dall'entità FotoProfiloUtente e dal DAO per creare oggetto concreto*/
+
 @Database(entities = {FotoProfiloUtente.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase{
-
 
     public abstract FotoProfiloUtentiDAO fotoProfiloUtentiDAO();
 

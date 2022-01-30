@@ -3,68 +3,91 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="200dp">
 
     <TextView
         android:id="@+id/SingleRowLinea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Linea"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.088" />
 
-    <Button
-        android:id="@+id/btnDirezione1"
-        android:layout_width="159dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="44dp"
-        android:backgroundTint="#4CAF50"
-        android:text="Seleziona"
-        app:layout_constraintBottom_toBottomOf="@+id/SingleRowDirezione1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.651"
-        app:layout_constraintStart_toEndOf="@+id/SingleRowDirezione1"
-        app:layout_constraintTop_toTopOf="@+id/SingleRowDirezione1"
-        app:layout_constraintVertical_bias="0.551" />
-
-    <Button
-        android:id="@+id/btnDirezione2"
-        android:layout_width="159dp"
-        android:layout_height="48dp"
-        android:backgroundTint="#4CAF50"
-        android:text="Seleziona"
-        app:layout_constraintBottom_toBottomOf="@+id/SingleRowDirezione2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.827"
-        app:layout_constraintStart_toEndOf="@+id/SingleRowDirezione2"
-        app:layout_constraintTop_toTopOf="@+id/SingleRowDirezione2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/SingleRowDirezione1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="direzione stazione 1"
+        android:layout_height="122dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintHorizontal_bias="0.213"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/SingleRowDirezione2"
+        <TextView
+            android:id="@+id/SingleRowDirezione2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="direzione stazione 2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.567"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.155" />
+
+        <TextView
+            android:id="@+id/SingleRowDirezione1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="direzione stazione 1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SingleRowDirezione2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="direzione stazione 2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/SingleRowDirezione1"
-        app:layout_constraintStart_toStartOf="@+id/SingleRowDirezione1"
-        app:layout_constraintTop_toBottomOf="@+id/SingleRowDirezione1" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.80"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnDirezione1"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/secondary_greem"
+            android:text="Seleziona"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/btnDirezione2"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/secondary_greem"
+            android:text="Seleziona"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnDirezione1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,13 +5,11 @@ public class Stazione {
     private double latitudine;
     private double longitudine;
 
-
     public Stazione(String nome, double latitudine, double longitudine) {
         this.nome = nome;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
     }
-
 
     public String getNome() {
         return nome;

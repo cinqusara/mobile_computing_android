@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.maledettatreest2.CommunicationController;
 import com.example.maledettatreest2.linee.AdapterLinee;
 import com.example.maledettatreest2.MyModel;
 import com.example.maledettatreest2.R;
@@ -23,13 +24,26 @@ import com.example.maledettatreest2.databinding.FragmentTratteBinding;
 public class TratteFragment extends Fragment {
 
     private FragmentTratteBinding binding;
-    MyModel istanza = MyModel.getInstance();
-    public static final String MTE_LOG = "MTE_LOG";
+    public static final String TRATTE_LOG = "TRATTE_LOG";
+
+    /** istanza Model */
+    MyModel istanzaModel = MyModel.getInstance();
+
+    /** dichiarazione CommunicationController */
+    CommunicationController cc;
+
+    /** RecyclerView */
+    RecyclerView recyclerViewLinee;
+    AdapterLinee adapterLinee ;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTratteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        /** istanza CommunicationController */
+        cc = new CommunicationController(getContext());
 
         return root;
     }
@@ -48,16 +62,19 @@ public class TratteFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(MTE_LOG, "onStart");
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        AdapterLinee adapter = new AdapterLinee(this);
-        recyclerView.setAdapter(adapter);
+        Log.d(TRATTE_LOG, "onStart");
 
-
+        //recyclerView Linee
+        recyclerViewLinee = getActivity().findViewById(R.id.recyclerViewLinee);
+        recyclerViewLinee.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterLinee = new AdapterLinee(this);
+        recyclerViewLinee.setAdapter(adapterLinee);
     }
 
-    //public void onClickSelezione(View v, )
+    public void notifyAdapterLinee(){
+        adapterLinee.notifyDataSetChanged();
+    }
+
 }
 
 

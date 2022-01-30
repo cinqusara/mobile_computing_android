@@ -10,11 +10,10 @@ import java.util.Date;
 
 public class Post {
 
-
     private String nomeAutore;
     private String uidAutore;
     private LocalDateTime dataOra;
-    private String versioneFoto;
+    private int versioneFoto = 0;
     private Boolean followAutore;
 
     //OPZIONALI
@@ -22,8 +21,7 @@ public class Post {
     private String stato;
     private String commento;
 
-
-    public Post(String nomeAutore, String uidAutore, LocalDateTime dataOra,  String versioneFoto, Boolean followAutore, String ritardo, String stato, String commento) {
+    public Post(String nomeAutore, String uidAutore, LocalDateTime dataOra, int versioneFoto, Boolean followAutore, String ritardo, String stato, String commento) {
         this.nomeAutore = nomeAutore;
         this.uidAutore = uidAutore;
         this.dataOra = dataOra;
@@ -58,11 +56,11 @@ public class Post {
         this.dataOra = dataOra;
     }
 
-    public String getVersioneFoto() {
+    public int getVersioneFoto() {
         return versioneFoto;
     }
 
-    public void setVersioneFoto(String versioneFoto) {
+    public void setVersioneFoto(int versioneFoto) {
         this.versioneFoto = versioneFoto;
     }
 
@@ -100,12 +98,14 @@ public class Post {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getDataString(){
-        return String.valueOf(this.dataOra.getDayOfMonth() + " " +  this.dataOra.getMonth() + " " +  this.dataOra.getYear());
+        return String.valueOf(this.dataOra.getDayOfMonth() + "/" +  this.dataOra.getMonth().getValue() + "/" +  this.dataOra.getYear());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getOraString(){
-        return String.valueOf(this.dataOra.getHour() + " " +  this.dataOra.getMinute());
+        String ore = String.format("%02d",this.dataOra.getHour());
+        String minuti = String.format("%02d",this.dataOra.getMinute());
+        return (ore + ":" + minuti);
     }
 
     @Override

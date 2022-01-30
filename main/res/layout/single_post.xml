@@ -1,0 +1,212 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="180dp"
+    android:background="#00000000"
+    app:barrierMargin="2dip"
+    app:circularflow_angles="3dip"
+    app:circularflow_defaultRadius="3dip"
+    app:layoutDescription="@xml/single_post2_scene">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="410dp"
+        android:layout_height="169dp"
+        android:background="@color/light_background_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/post_data"
+            android:layout_width="50dp"
+            android:layout_height="11dp"
+            android:layout_marginBottom="102dp"
+            android:text="03/02/2022"
+            android:textColor="#B0597C4C"
+            android:textSize="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/post_commento"
+            app:layout_constraintEnd_toEndOf="@+id/post_commento"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/post_commento"
+            app:layout_constraintTop_toBottomOf="@+id/post_autore"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/btnFollow"
+            android:layout_width="32dp"
+            android:layout_height="42dp"
+            android:padding="4dp"
+            android:paddingLeft="1dp"
+            app:flow_horizontalAlign="center"
+            app:flow_verticalAlign="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fotoProfiloPost"
+            app:layout_constraintStart_toStartOf="@+id/fotoProfiloPost"
+            app:layout_constraintTop_toTopOf="@+id/fotoProfiloPost"
+            app:layout_constraintVertical_bias="0.705" />
+
+        <TextView
+            android:id="@+id/post_autore"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:text="Autore"
+            android:textColor="#05403A"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/fotoProfiloPost"
+            app:layout_constraintEnd_toEndOf="@+id/post_commento"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/post_commento"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.733" />
+
+        <TextView
+            android:id="@+id/post_commento"
+            android:layout_width="115dp"
+            android:layout_height="92dp"
+            android:text="Commento"
+            android:textColor="#616161"
+            android:textSize="11dp"
+            android:textStyle="italic"
+            app:emojiCompatEnabled="true"
+            app:layout_constraintBottom_toBottomOf="@+id/btnFollow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.095"
+            app:layout_constraintStart_toEndOf="@+id/fotoProfiloPost"
+            app:layout_constraintTop_toTopOf="@+id/fotoProfiloPost"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/barraSpaziatrice"
+            android:layout_width="413dp"
+            android:layout_height="9dp"
+            android:background="#00FFFFFF"
+            tools:layout_editor_absoluteY="171dp"
+            tools:ignore="MissingConstraints" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotoProfiloPost"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:cropToPadding="true"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#000000"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.471" />
+
+        <TextView
+            android:id="@+id/post_ora"
+            android:layout_width="32dp"
+            android:layout_height="11dp"
+            android:text="Ora"
+            android:textColor="#B0597C4C"
+            android:textSize="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/post_data"
+            app:layout_constraintEnd_toEndOf="@+id/post_commento"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/post_data"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/infoTrenoPost"
+            android:layout_width="102dp"
+            android:layout_height="104dp"
+            android:background="@drawable/shadow"
+            android:elevation="8dp"
+            android:gravity="center_vertical"
+            android:padding="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/post_commento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.24"
+            app:layout_constraintStart_toEndOf="@+id/post_commento"
+            app:layout_constraintTop_toTopOf="@+id/post_commento"
+            app:layout_constraintVertical_bias="0.0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+                <TextView
+                    android:id="@+id/titolo_ritardo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Ritardo"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/post_stato"
+                    app:layout_constraintStart_toStartOf="@+id/post_stato"
+                    app:layout_constraintTop_toBottomOf="@+id/post_stato"
+                    app:layout_constraintVertical_bias="0.3" />
+
+                <TextView
+                    android:id="@+id/titolo_stato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Stato"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.507"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.08" />
+
+                <TextView
+                    android:id="@+id/post_ritardo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:padding="0.5dp"
+                    android:text="ritardo"
+                    android:textSize="10dp"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/titolo_ritardo"
+                    app:layout_constraintHorizontal_bias="0.512"
+                    app:layout_constraintStart_toStartOf="@+id/titolo_ritardo"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo_ritardo"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/post_stato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="stato"
+                    android:textSize="10dp"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/titolo_stato"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="@+id/titolo_stato"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo_stato"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

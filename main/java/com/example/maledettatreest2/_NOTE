@@ -1,0 +1,111 @@
+--- CARTELLA DB FOTO ---
+
+APP DATA BASE
+-   classe astratta che parte dall'entità FotoProfiloUtente e dal DAO per creare
+    oggetto concreto
+FOTO PROFILO UTENTE
+-   entità del DB
+FOTO PROFILO UTENTE DAO
+-   interfaccia che definisce le operazioni possono essere fatte sui
+    dati del DB, ma come metodi java
+
+--- CARTELLA FRAGMENT ---
+
+HOME FRAGMENT
+    - onCreateView: prende i riferimenti ed inizializza i vari oggetti
+    - onStart: prende tutti i riferimenti al layout ed inizia a scaricare i post
+    - invertiDirezione: metodo che dialoga con il model per settare la nuova direzione e scaricare
+                        nuovi post
+    - downloadStazioni: metodi richiamato al click del pulsante per scaricare le stazioni e fa
+                        e fa partire la activity mappa
+    - downloadPosts: chiamata di rete per poter scaricare tutto l'array di post
+    - createStazioniFromJSON: crea oggetto stazione tramite una chiamata di rete e lo aggiunge nel model
+    - createPostFromJSON: crea oggetto post tramite una chiamata di rete e lo aggiunge nel model
+    - popolaSchermataHome: setta la schermata home con i nuovi oggetti e manda una notify all'adapter
+    - notifyAdapterPost
+
+PROFILO FRAGMENT
+    - onCreateView: prende i riferimenti ed inizializza i vari oggetti
+    - onStart: setta i vari riferimenti agli oggettiLayout
+        * refreshUsername: refresha la schermata e visualizza il nuovo nome
+        * refreshPictureUser: refresha la schermata e visualizza il nuovo nome
+        * choosePicture: metodo sul click del pulsante che aziona i vari metodi
+                         per le richieste dei permessi
+        * setVisibilityBtnSetNome: rende visibile tutti gli elementi per settare il nome
+        * setVisibilityBtnInviaNome: rende visibile tutti gli elementi per inviare il nome
+    - uploadNewUsername: invia al server il nuovo nome e richiama refreshUsername
+    - uploadNewProfilePicture: invia al server la nuova foto profilo e richiama refreshPictureUser
+
+TRATTE FRAGMENT
+ - onCreateView: prende i riferimenti ed inizializza i vari oggetti
+ - onStart: inizializza la recycleView per le linee
+ - notifyAdapterLinee: metodo per la notify della recycle view
+
+--- CARTELLA LINEE ---
+
+ADAPTER LINEE
+    - onCreateViewHolder: richiamato quando si crea un nuovo oggetto di view che rappresenta una cella
+    - onBindViewHolder: metodo che associa il model alla view viene richiamato quando ad una
+      cella vengono associati i suoi dati
+    - getItemCount: metodo per sapere il numero di oggetti da mostrare
+
+VIEW HOLDER LINEE
+    - updateContent: prende i riferimenti agli elementi nella singola cella e setta i dati
+
+--- CARTELLA POSTS ---
+
+ADAPTER POST
+    - onCreateViewHolder: richiamato quando si crea un nuovo oggetto di view che rappresenta una cella
+    - onBindViewHolder: metodo che associa il model alla view viene richiamato quando ad una cella vengono
+      associati i suoi dati
+    - getItemCount: metodo per sapere il numero di oggetti da mostrare
+
+VIEW HOLDER POST
+    - setStato: setta lo stato sul post
+    - setRitardo: setta il ritardo sul post
+    - setBtnFollow: setta il bottone con icone differenti a seconda se seguiamo o meno l'autore
+    - setta lo stato sul post: mostra la foto del profilo
+    - getUserPictureFromServer: fa una chiamata di rete per recuperare l'immagine del profilo aggiornata
+    - followUnfollowAuthorPost: fa due chiamate di rete distinte a seconda se si sta unfollowando o followando
+                                l'autore del post
+        * unfollowAuthore: chiamata di rete per settare unfollow, con notify per l'adapter
+        * followAuthore: chiamata di rete per settare unfollow, con notify per l'adapter
+
+CREA POST ACTIVITY
+    - onCreate: prende i riferimenti ed inizializza i vari oggetti
+    - postOnHomePage: controlla il commento e nel caso sia corretto richiama createNewPost e passa
+                      alla MainActivity
+        * checkMinFields_createObj: funzione che controlla i campi opzionali e nel caso crea l'oggetto
+          campo opazinale
+        * checkCommentLength: controlla la lunghezza del commento, nel caso mostra un toast
+        * createNewPost: chiamata di rete per creare un nuovo post
+    - onRadioButtonClicked: metodo per capire quale stato ha settato l'utente
+    - onItemSelected: metodo per capire quale ritardo a settato l'utente
+        * onNothingSelected: se ha cliccato "seleziona"
+
+--- ALTRE CLASSI ---
+IMAGE UTIL
+    - convertToBitmap: prende una stringa e la converte in un bitmap
+    - convertToBase64: da bitmap a stringa
+    - drawableToBitmap: da drawable a bitmap
+
+MAIN ACTIVITY
+    - replaceFragment: cambia il fragment
+    - onCreate: sulla creazione dell'activity vengono fatti diversi controlli
+        * isNetworkConnected: controlla se c'è internet nel caso invia un messaggio di errore
+        * showDialog: mostra schermata errore pop up
+        * clearModel: cancella tutti i dati dal model
+        * checkFirstStart: controlla se è il primo avvio
+            + isFirstStart: cambia il fragment ed esegue la register dell'utente
+            + isSecondStartWithoutDid: cambia il fragment, setta il model ed avvia il download delle linee
+    - getActivity: restituisce l'istanza della main activity
+    - goToHomePage: metodo che permette di andare nella schermata home
+    - saveAllInShared: salva tutto in maniera persistente
+    - downloadLinee: chiamata di rete per scaricare le linee
+    - register: chiamata di rete per la registrazione
+    - createLineFromJSON: crea elemento Line dal JSON
+    - notifyAdapterPostFromMainActivity: notifica all'adapter post che sono cambiati i post
+    - insertPictureInDB: inserire la foto in maniera persistente nel DB
+    - hideKeyboard: nasconde tastiera
+    - showKeyboard: mostra la tastiera
+

@@ -7,41 +7,189 @@
     tools:context=".fragment.ProfiloFragment">
 
     <TextView
-        android:id="@+id/nomeProfilo"
+        android:id="@+id/titolo_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:editable="true"
-        android:inputType="textPersonName"
-        android:text="NaN"
+        android:text="Username"
+        android:textColor="@color/primary_green"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sfondo"
+        android:layout_width="363dp"
+        android:layout_height="163dp"
+        android:background="#FDFDFD"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <ImageView
-        android:id="@+id/fotoProfilo"
-        android:layout_width="106dp"
-        android:layout_height="93dp"
-        app:layout_constraintBottom_toTopOf="@+id/nomeProfilo"
+        <ImageView
+            android:id="@+id/immagineSfondoTreno"
+            android:layout_width="431dp"
+            android:layout_height="247dp"
+            android:src="@drawable/sfondo_profilo2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/sfondo"
+        app:layout_constraintVertical_bias="0.317"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/bottoneInviaNomeProfilo"
+            android:layout_width="107dp"
+            android:layout_height="41dp"
+            android:text="modifica"
+            android:textSize="12dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.948" />
+
+        <Button
+            android:id="@+id/bottoneModificaNomeProfilo"
+            android:layout_width="31dp"
+            android:layout_height="42dp"
+
+            android:includeFontPadding="false"
+            android:paddingLeft="8.5dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:translationX="25dp"
+            app:cornerRadius="@android:dimen/app_icon_size"
+            app:icon="@drawable/ic_baseline_edit_24"
+            app:iconPadding="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/nomeProfilo"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/nomeProfilo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.737" />
+
+        <TextView
+            android:id="@+id/nomeProfilo"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:editable="true"
+            android:inputType="textPersonName"
+            android:text="NaN"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/modificaNomeProfiloLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:visibility="invisible"
+            app:counterEnabled="true"
+            app:counterMaxLength="20"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/modificaNomeProfilo"
+                android:layout_width="275dp"
+                android:layout_height="52dp"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textSize="16dp"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="134dp">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.626"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:src="@tools:sample/avatars[1]" />
+        app:layout_constraintVertical_bias="0.48000002"
+        tools:ignore="MissingConstraints">
 
-    <Button
-        android:id="@+id/buttoneModificaNomeProfilo"
-        android:layout_width="31dp"
-        android:layout_height="32dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/nomeProfilo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toEndOf="@+id/nomeProfilo"
-        app:layout_constraintTop_toTopOf="@+id/nomeProfilo"
-        app:layout_constraintVertical_bias="0.0" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/fotoProfilo"
+            android:layout_width="169dp"
+            android:layout_height="134dp"
+            android:cropToPadding="true"
+            android:padding="3dp"
+            android:radius="20dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#245102"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.17000002"
+            tools:src="@drawable/default_user_profile_picture_hvoncb" />
+
+        <Button
+            android:id="@+id/bottoneModificaFotoProfilo"
+            android:layout_width="31dp"
+            android:layout_height="42dp"
+            android:includeFontPadding="false"
+            android:paddingLeft="8.5dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            app:cornerRadius="@android:dimen/app_icon_size"
+            app:icon="@drawable/ic_baseline_edit_24"
+            app:iconPadding="1dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.884"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

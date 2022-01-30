@@ -4,7 +4,6 @@ public class Tratta {
     private String nome;
     private String did;
 
-
     public Tratta(String nome, String did) {
         this.nome = nome;
         this.did = did;

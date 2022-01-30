@@ -1,0 +1,117 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:background="#00000000"
+    app:barrierMargin="2dip"
+    app:circularflow_angles="3dip"
+    app:circularflow_defaultRadius="3dip"
+    app:layoutDescription="@xml/single_post2_scene">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="408dp"
+        android:layout_height="130dp"
+        android:background="#4F73ED78"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/post_data"
+            android:layout_width="50dp"
+            android:layout_height="11dp"
+            android:text="03/02/2022"
+            android:textColor="#B0597C4C"
+            android:textSize="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/post_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintStart_toEndOf="@+id/post_description"
+            app:layout_constraintTop_toTopOf="@+id/post_description"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/title_post"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginStart="148dp"
+            android:text="Title"
+            android:textColor="#05403A"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/post_description"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.061" />
+
+        <TextView
+            android:id="@+id/post_description"
+            android:layout_width="115dp"
+            android:layout_height="92dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginEnd="164dp"
+            android:text="Description"
+            android:textColor="#616161"
+            android:textSize="11dp"
+            android:textStyle="italic"
+            android:visibility="invisible"
+            app:emojiCompatEnabled="true"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/foto_official_post"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/foto_official_post"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:cropToPadding="true"
+            android:padding="1dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#000000"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.471" />
+
+        <TextView
+            android:id="@+id/post_orario"
+            android:layout_width="39dp"
+            android:layout_height="26dp"
+            android:text="Ora"
+            android:textColor="#B0597C4C"
+            android:textSize="9dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/post_data"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/post_data"
+            app:layout_constraintTop_toBottomOf="@+id/post_data"
+            app:layout_constraintVertical_bias="0.101" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/barraSpaziatrice"
+        android:layout_width="413dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="136dp"
+        android:background="#00FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-2dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

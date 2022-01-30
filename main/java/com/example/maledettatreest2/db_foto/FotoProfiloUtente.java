@@ -22,7 +22,6 @@ public class FotoProfiloUtente {
     @ColumnInfo(name = "foto")
     private String foto;
 
-
     public FotoProfiloUtente(String uid, int versione, String foto) {
         this.uid = uid;
         this.versione = versione;
@@ -58,7 +57,6 @@ public class FotoProfiloUtente {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-
 
     @Override
     public String toString() {

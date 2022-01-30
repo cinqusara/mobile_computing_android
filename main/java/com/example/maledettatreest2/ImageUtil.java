@@ -12,13 +12,13 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 
 public class ImageUtil {
+
     public static Bitmap convertToBitmap(String base64Str) throws IllegalArgumentException {
         byte[] decodedBytes = Base64.decode(
                 base64Str.substring(base64Str.indexOf(",") + 1),
                 Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
     }
-
 
     public static String convertToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -27,7 +27,6 @@ public class ImageUtil {
         String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
         return encoded;
     }
-
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
     /*USAGE
@@ -52,5 +51,12 @@ public class ImageUtil {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    public static boolean isQuadrata(Bitmap foto) {
+        if (foto.getWidth() == foto.getHeight()) {
+            return true;
+        }
+        return false;
     }
 }

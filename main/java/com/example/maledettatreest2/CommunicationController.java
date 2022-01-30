@@ -16,7 +16,7 @@ import java.util.Iterator;
 
 public class CommunicationController {
 
-    private static final String MTE_LOG = "MTE_LOG";
+    private static final String CC_LOG = "CC_LOG";
     private static String BASE_URL="https://ewserver.di.unimi.it/mobicomp/treest/";
 
     private static String REGISTER_URL=BASE_URL+"/register.php";
@@ -29,6 +29,8 @@ public class CommunicationController {
 
     private static String GET_POSTS_URL=BASE_URL+"/getPosts.php"; //sid, did (identificativo tratta)
     private static String ADD_POSTS_URL=BASE_URL+"/addPost.php"; //sid, did, delay, status, comment
+    private static String GET_OFFICIAL_POSTS_URL=BASE_URL+"/statolineatreest.php"; //did
+
 
     private static String FOLLOW_URL=BASE_URL+"/follow.php"; //sid, uid
     private static String UNFOLLOW_URL=BASE_URL+"/unfollow.php"; //sid, uid
@@ -39,10 +41,8 @@ public class CommunicationController {
         queue= Volley.newRequestQueue(context);
     }
 
-
-
+    /** chiamata di registrazione --> output: sid*/
     public void register(Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
-
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 REGISTER_URL,
@@ -53,7 +53,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
+    /** chiamata per avere i dati dell'utente --> input: sid */
     public void getProfile(String sid, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -71,15 +71,23 @@ public class CommunicationController {
         queue.add(req);
     }
 
-    public void setProfile(String sid, String name, String picture, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
+    /** chiamata per settare i nuovi dati dell'utente*/
+    public void setProfile(String sid, JSONObject campiProfilo, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) throws JSONException {
         JSONObject objParam = new JSONObject();
         try {
             objParam.put("sid", sid);
-            objParam.put("name", name);
-            objParam.put("picture", picture);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        Iterator itr = campiProfilo.keys();
+
+        while(itr.hasNext()) {
+            String key = (String) itr.next();
+            objParam.put(key, campiProfilo.getString(key)); //creiamo l'oggetto json ed inseriamo i dati
+        }
+
+        Log.d(CC_LOG, objParam.toString());
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 SET_PROFILE_URL,
@@ -90,7 +98,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
+    /** chiamata per avere la foto profilo dell'utente */
     public void getUserPicture(String sid,String uidUtenteDaCercare, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -109,8 +117,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
-
+    /** chiamata per le linee */
     public void getLines(String sid, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -128,7 +135,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
+    /** chiamata per le stazioni di una linea*/
     public void getStations(String sid, String didTratta, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -147,7 +154,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
+    /** chiamata avere tutti i post di una tratta specifica*/
     public void getPosts(String sid, String didTratta, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -166,8 +173,9 @@ public class CommunicationController {
         queue.add(req);
     }
 
+    /** chiamata per aggiungere nuovo post ad una tratta specifica */
     public void addPost(String sid, String didTratta, JSONObject campiPost, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) throws JSONException {
-        Log.d(MTE_LOG, "add post");
+        Log.d(CC_LOG, "add post");
         JSONObject objParam = new JSONObject();
         try {
             objParam.put("sid", sid);
@@ -182,8 +190,7 @@ public class CommunicationController {
             String key = (String) itr.next();
             objParam.put(key, campiPost.getString(key));
         }
-        Log.d(MTE_LOG, "objParam    "+ objParam.toString());
-
+        Log.d(CC_LOG, "objParam    "+ objParam.toString());
 
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
@@ -195,6 +202,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
+    /** chiamata indicare che l'utente ha iniziato a seguire l'autore del post */
     public void follow(String sid,String uidUtenteDaSeguire, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -213,7 +221,7 @@ public class CommunicationController {
         queue.add(req);
     }
 
-
+    /** chiamata indicare che l'utente ha iniziato a non seguire l'autore del post */
     public void unfollow(String sid,String uidUtenteDaSmettereDiSeguire, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
         JSONObject objParam = new JSONObject();
         try {
@@ -225,6 +233,26 @@ public class CommunicationController {
         JsonObjectRequest req = new JsonObjectRequest(
                 Request.Method.POST,
                 UNFOLLOW_URL,
+                objParam,
+                responseListener,
+                errorListener
+        );
+        queue.add(req);
+    }
+
+    //todo esame
+
+    public void getOfficialPosts(String didTratta, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
+        Log.d(CC_LOG, "chiamata official post");
+        JSONObject objParam = new JSONObject();
+        try {
+            objParam.put("did", didTratta);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest req = new JsonObjectRequest(
+                Request.Method.POST,
+                GET_OFFICIAL_POSTS_URL,
                 objParam,
                 responseListener,
                 errorListener
